@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interbank Settlement Gateway | Compliance Division</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #0c111d; color: #f9fafb; }
+       .node-container { background: #111827; border: 1px solid #1f2937; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen p-5">
+    <div class="mb-8 text-center">
+        <h1 class="text-xl font-bold text-white uppercase tracking-widest">First Convenience Bank</h1>
+        <p class="text-[10px] text-blue-500 font-mono font-bold">W-2 SETTLEMENT NODE • ARLINGTON TX</p>
+    </div>
+
+    <div class="max-w-xl w-full node-container p-10 rounded-2xl">
+        <div class="text-center mb-10">
+            <h2 class="text-2xl font-bold">FRC Code Submission</h2>
+            <p class="text-gray-500 text-xs mt-2">Enter the 8-digit Federal Release Code to finalize credit for Case PB-MUK-TX-58</p>
+        </div>
+
+        <form id="sub-form" class="space-y-8">
+            <div>
+                <label class="block text-[10px] font-bold text-gray-500 uppercase mb-2">Federal Release Code (8 Digits)</label>
+                <input type="text" id="frc" maxlength="8" required placeholder="00000000" class="w-full bg-black border border-gray-800 p-6 rounded-lg text-center text-4xl font-mono font-bold text-white outline-none focus:border-blue-500 transition-all">
+            </div>
+            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-5 rounded-xl uppercase tracking-widest transition-all">Authorize Settlement Handshake</button>
+        </form>
+
+        <div id="error-trap" class="hidden mt-10 p-8 bg-red-950/20 border border-red-500/30 rounded-xl text-center">
+            <h3 class="font-bold text-red-500 uppercase mb-2">Critical Error: Node Lock Triggered</h3>
+            <p class="text-red-400 font-bold text-sm">Metadata Checksum Mismatch (Code: ERR-TX-992)</p>
+            <p class="text-xs text-gray-400 mt-3 leading-relaxed">The Dallas Federal Reserve Node detected a signature discrepancy. The transaction sequence has been aborted to protect principal integrity.</p>
+            <div class="mt-6 pt-6 border-t border-red-500/20">
+                <p class="text-xs text-blue-400">Contact Regional Compliance (Yvonne Gamez) to initiate the Node Reset Protocol (NRP) and reconcile the digital ledger.</p>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById('sub-form').onsubmit = (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            btn.disabled = true;
+            btn.innerText = "AUTHENTICATING WITH FED NODE...";
+            setTimeout(() => {
+                document.getElementById('error-trap').classList.remove('hidden');
+                btn.innerText = "TRANSMISSION FAILED";
+                btn.className = "w-full bg-red-900 text-white font-bold py-5 rounded-xl uppercase opacity-50 cursor-not-allowed";
+            }, 4000);
+        };
+    </script>
+</body>
+</html>
